@@ -22,14 +22,10 @@ public class ClassroomDAO {
     private final String INSERT = "insert into classroom (name, capacity, orientation, plugs) values(?, ?, ?, ?)";
 
     private final RowMapper<Classroom> mapper = (resultSet, i) -> {
-        return new Classroom.ClassroomBuilder()
-                .capacity(resultSet.getInt("capacity"))
-                .name(resultSet.getString("name"))
-                .orientation(resultSet.getString("orientation"))
-                .plugs(resultSet.getBoolean("plugs"))
-                .build();
+        return new Classroom.ClassroomBuilder().capacity(resultSet.getInt("capacity"))
+                .name(resultSet.getString("name")).orientation(resultSet.getString("orientation"))
+                .plugs(resultSet.getBoolean("plugs")).build();
     };
-
 
     public ClassroomDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -71,13 +67,10 @@ public class ClassroomDAO {
                 preparedStatement.setString(3, classroom.getOrientation());
                 preparedStatement.setBoolean(4, classroom.isPlugs());
             }
-
             @Override
             public int getBatchSize() {
                 return classrooms.size();
             }
         });
-
     }
-
 }

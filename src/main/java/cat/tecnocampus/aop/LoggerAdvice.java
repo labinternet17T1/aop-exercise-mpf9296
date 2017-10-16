@@ -1,6 +1,5 @@
 package cat.tecnocampus.aop;
 
-import cat.tecnocampus.domain.Classroom;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -8,12 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 import org.aspectj.lang.ProceedingJoinPoint;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by maria on 16/10/2017.
@@ -21,9 +16,19 @@ import java.util.List;
 
 @Aspect
 @Component
-public class LoggerAdvise {
+public class LoggerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggerAdvise.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggerAdvice.class);
+
+    /*-Create a pointcut for all methods (there is only one) that have a single attribute of class Classroom
+      -Create a pointcut for all methods that begins with the word find
+      -Create a pointcut fot the method insertBatch
+      -Create a before advice for the first pointcut that logs the message "Working with a classroom"
+      -Create a after advice for the second pointcut that logs the message "Finding classrooms"
+      -Create an around advice for the third pointcut that logs two messages. The one before calling the method that
+      reads before multiple insert and the second after calling the method that reads after multiple insert.
+      Note that you must find the way to pass the list of classrooms to the adviced method.
+     */
 
     //A pointcut that matches one single method
     @Pointcut("execution(* cat.tecnocampus.controller.ControllerDAO.*(..))")
@@ -31,19 +36,19 @@ public class LoggerAdvise {
         logger.info("Going to get a classroom method");
     }
 
-    @Before("pointcutClassroom()")
-    public void beforeClassroom() {
+    //@Before("pointcutClassroom()")   ??????????????
+    public void beforeFindClassroom() {
         logger.info("Working with a classroom");
     }
 
     @Pointcut("execution(* cat.tecnocampus.controller.ControllerDAO.*find*(..))")
     public void pointcutFind() {
-        logger.info("Going to show a method with find word");
+        logger.info("Going to show a method with the word find");
     }
 
-    @After("pointcutClassroom()")
+    //@After("pointcutClassroom()") ??????????????
     public void afterFindClassroom() {
-        logger.info("Finding classroom/s");
+        logger.info("Finding classrooms");
     }
 
     //A pointcut that matches all methods having the word "Notes" in any position of methods' name

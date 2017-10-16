@@ -6,7 +6,7 @@ public class Classroom {
     private String orientation;
     private boolean plugs;
 
-    public Classroom() {    }
+    public Classroom() { }
 
     public Classroom(ClassroomBuilder builder) {
         name = builder.name;
@@ -43,7 +43,7 @@ public class Classroom {
 
     @Override
     public String toString() {
-        return "Classroom{" + "name='" + name + '\'' + ", capacity=" + capacity + ", orientation='" +
+        return "Classroom {" + "name='" + name + '\'' + ", capacity=" + capacity + ", orientation='" +
                 orientation + '\'' + ", plugs=" + plugs + '}';
     }
 

@@ -23,21 +23,23 @@ public class JdbcexerciseApplication implements CommandLineRunner{
 	@Override
 	public void run(String... strings) throws Exception {
 
+		System.out.println("\n----------------------------------------------------------------------------------------------------");
+		System.out.println("*********************		Exercise 3 - AOP (Aspect Oriented Programming)		*********************\n");
+
 		System.out.println("Find all:");
 		classroomDAO.findAll().forEach(System.out::println);
 
-		System.out.println("\n\nFind capacity larger than");
+		System.out.println("\n\nFind capacity larger than 50:");
 		classroomDAO.findCapacityLargerThan(50).forEach(System.out::println);
 
-		System.out.println("\n\nFind capacity lower than");
+		System.out.println("\n\nFind capacity lower than 60:");
 		classroomDAO.findCapacityLowerThan(60).forEach(System.out::println);
 
-		System.out.println("\n\nFind no plugs");
+		System.out.println("\n\nFind classrooms qith no plugs:");
 		classroomDAO.findWithNoPlugs().forEach(System.out::println);
 
-		System.out.println("\n\nFind with plugs");
+		System.out.println("\n\nFind classrooms with plugs:");
 		classroomDAO.findWithPlugs().forEach(System.out::println);
-
 
 		List<Classroom> classroomList = new ArrayList<>();
 		classroomList.add(new Classroom.ClassroomBuilder().name("Class1").capacity(10).orientation("sud").plugs(false).build());
@@ -46,7 +48,9 @@ public class JdbcexerciseApplication implements CommandLineRunner{
 
 		classroomDAO.insert(new Classroom.ClassroomBuilder().name("Class3").capacity(10).orientation("sud").plugs(false).build());
 
-		System.out.println("Find all:");
+		System.out.println("\n\nFind all:");
 		classroomDAO.findAll().forEach(System.out::println);
+
+		System.out.println("\n");
 	}
 }
