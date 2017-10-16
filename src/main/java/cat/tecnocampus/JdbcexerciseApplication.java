@@ -40,17 +40,13 @@ public class JdbcexerciseApplication implements CommandLineRunner{
 
 
 		List<Classroom> classroomList = new ArrayList<>();
-		classroomList.add(new Classroom.ClassroomBuilder()
-							.name("Class1").capacity(10).orientation("sud").plugs(false).build());
-		classroomList.add(new Classroom.ClassroomBuilder()
-				.name("Class2").capacity(10).orientation("sud").plugs(false).build());
+		classroomList.add(new Classroom.ClassroomBuilder().name("Class1").capacity(10).orientation("sud").plugs(false).build());
+		classroomList.add(new Classroom.ClassroomBuilder().name("Class2").capacity(10).orientation("sud").plugs(false).build());
 		classroomDAO.insertBatch(classroomList);
 
-		classroomDAO.insert(new Classroom.ClassroomBuilder()
-				.name("Class3").capacity(10).orientation("sud").plugs(false).build());
+		classroomDAO.insert(new Classroom.ClassroomBuilder().name("Class3").capacity(10).orientation("sud").plugs(false).build());
 
 		System.out.println("Find all:");
 		classroomDAO.findAll().forEach(System.out::println);
-
 	}
 }

@@ -26,23 +26,53 @@ public class LoggerAdvise {
     private static final Logger logger = LoggerFactory.getLogger(LoggerAdvise.class);
 
     //A pointcut that matches one single method
-    @Pointcut("execution(* cat.tecnocampus.persistence.ClassroomDAO.findAll())") ///????????
-    public void pointcutListUsers() {}
-
-    @Before("pointcutListUsers()")
-    public void beforeListUsers() {
-        logger.info("Going to list all users");
+    @Pointcut("execution(* cat.tecnocampus.controller.ControllerDAO.*(..))")
+    public void pointcutClassroom() {
+        logger.info("Going to get a classroom method");
     }
 
-    @After("pointcutListUsers()")
-    public void afterListUsers() {
-        logger.info("Already listed all users");
+    @Before("pointcutClassroom()")
+    public void beforeClassroom() {
+        logger.info("Working with a classroom");
+    }
+
+    @Pointcut("execution(* cat.tecnocampus.controller.ControllerDAO.*find*(..))")
+    public void pointcutFind() {
+        logger.info("Going to show a method with find word");
+    }
+
+    @After("pointcutClassroom()")
+    public void afterFindClassroom() {
+        logger.info("Finding classroom/s");
     }
 
     //A pointcut that matches all methods having the word "Notes" in any position of methods' name
-    @Pointcut("execution(* cat.tecnocampus.useCases.UserUseCases.*Notes*(..))")
-    public void pointcutNotes() {}
+    @Pointcut("execution(* cat.tecnocampus.controller.ControllerDAO.insertBatch(..))")
+    public void pointcutBach() {
+        logger.info("Insterting batch of classrooms");
+    }
 
+    @Around("pointcutBach()")
+    public int[] dealRequestParam(ProceedingJoinPoint jp) {
+        try {
+            logger.info("Before inserting multiple classrooms");
+            //note that showUserRequestParameter is proxied and it must return a string
+            // representing the thymeleaf file name
+
+            //List<Classroom> res = (List<Classroom>) jp.proceed();
+            int[] res = (int[]) jp.proceed();
+            logger.info("After inserting multiple classrooms");
+            return res;
+        } catch (Throwable throwable) {
+            logger.info("Showing classroom/s: Something went wrong");
+            throwable.printStackTrace();
+            //return new ArrayList<Classroom>();
+            return new int[]{};
+        }
+    }
+
+
+/*
     @Before("pointcutNotes()")
     public void beforeDealingNotes() {
         logger.info("Going to deal with notes");
@@ -73,5 +103,5 @@ public class LoggerAdvise {
     @Before("showUserPointcut(userName)")
     public void showUserAdvice(String userName) {
         logger.info("Going to show user: " + userName);
-    }
+    }*/
 }
